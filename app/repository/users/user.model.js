@@ -1,30 +1,60 @@
 import mongoose from 'mongoose'
+import shared from './../../config/shared.js'
 
 const User = new mongoose.Schema({
   username: {
     type: String,
     unique: true,
+    required: true,
   },
-  name: String,
-  surname: String,
   email: {
     type: String,
     unique: true,
+    required: true,
   },
-  password: String,
-  role: String,
+  password: {
+    type: String,
+    required: true,
+  },
+  role: {
+    type: String,
+    required: true,
+    default: shared.ROLES.USER,
+  },
+  plan: {
+    type: String,
+    required: true,
+    default: shared.PLANS.FREE,
+  },
+  tracksCounter: {
+    type: Number,
+    default: 0
+  },
+  trackUpdatePreference: {
+    type: String,
+    default: shared.PLANS_CONFIG.DAILY,
+  },
+  conditionsCheck: {
+    type: Boolean,
+    default: false,
+  },
 
-  conditionsCheck: Boolean,
+  creationDate: {
+    type: Date,
+    default: new Date()
+  },
 
-  creationDate: Date,
-
-  forgotPasswordCode: String,
+  forgotPasswordCode: {
+    type: String,
+  },
 
   deleted: {
     type: Boolean,
     default: false,
   },
-  deletedDate: Date,
+  deletedDate: {
+    type: Date,
+  },
   deletedBy: {
     type: mongoose.Types.ObjectId,
     ref: 'User',
