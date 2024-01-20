@@ -7,4 +7,5 @@ export default async function (app) {
 
     app.use('/api/auth', (await import("./auth.routes.js")).default)
     app.use('/api/user', (await import("./user.routes.js")).default)
+    app.use('/api/track', (await import("./track.routes.js")).default)
 }
