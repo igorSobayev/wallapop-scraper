@@ -17,6 +17,9 @@ const config = {
         'THREE_HOURS': 'three_hours',
         'ONE_HOUR': 'one_hour',
     },
+    AVAILABLE_PLATFORMS: {
+        'WALLAPOP': 'wallapop',
+    },
     EXCLUDED_USER_FIELDS: '-password -email -role -deleted -__v',
     EXCLUDED_RECIPE_FIELDS: '-onProgress -deleted -deletedDate -deletedBy -deleted -__v',
 }
