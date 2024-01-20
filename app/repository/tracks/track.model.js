@@ -11,6 +11,15 @@ const Track = new mongoose.Schema({
   platform: {
     type: String,
   },
+  link: {
+    type: String,
+  },
+  updateDate: {
+    type: Date,
+  },
+  creationDate: {
+    type: Date,
+  },
 
   // Product info
   title: {
@@ -41,9 +50,6 @@ const Track = new mongoose.Schema({
   description: {
     type: String,
   },
-  link: {
-    type: String,
-  },
   sold: {
     type: Boolean,
     default: false,
@@ -51,12 +57,6 @@ const Track = new mongoose.Schema({
   reserved: {
     type: Boolean,
     default: false,
-  },
-  updateDate: {
-    type: Date,
-  },
-  creationDate: {
-    type: Date,
   },
 
   deleted: {
