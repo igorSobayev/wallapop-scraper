@@ -38,7 +38,7 @@ export const verifyUserAndToken = (req, res, next) => {
     let isLogged = false
 
     // First check if the ID param is the user
-    const userIdParam = req.params.id
+    const userIdParam = req.params.id || req.params.user || req.params.userId
     if (userIdParam && req.userId === userIdParam) {
       isLogged = true
     } 
