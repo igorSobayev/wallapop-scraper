@@ -23,9 +23,6 @@ const TrackHistory = new mongoose.Schema({
   price: {
     type: Number,
   },
-  oldPrice: {
-    type: Number,
-  },
   delivery: {
     type: Boolean,
     default: false,
@@ -39,9 +36,6 @@ const TrackHistory = new mongoose.Schema({
   description: {
     type: String,
   },
-  link: {
-    type: String,
-  },
   sold: {
     type: Boolean,
     default: false,
@@ -51,9 +45,6 @@ const TrackHistory = new mongoose.Schema({
     default: false,
   },
   updateDate: {
-    type: Date,
-  },
-  creationDate: {
     type: Date,
   },
 
