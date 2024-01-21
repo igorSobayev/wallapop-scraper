@@ -34,9 +34,6 @@ const Track = new mongoose.Schema({
   price: {
     type: Number,
   },
-  oldPrice: {
-    type: Number,
-  },
   delivery: {
     type: Boolean,
     default: false,
