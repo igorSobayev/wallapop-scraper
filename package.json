@@ -23,6 +23,7 @@
   "author": "igor",
   "license": "ISC",
   "dependencies": {
+    "agenda": "^5.0.0",
     "aws-sdk": "^2.1450.0",
     "bcryptjs": "^2.4.3",
     "better-validator": "^2.1.9",

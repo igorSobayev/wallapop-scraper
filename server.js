@@ -3,6 +3,8 @@ import cors from 'cors'
 import cookieSession from 'cookie-session'
 import dotenv from 'dotenv'
 
+import agenda from './app/components/agenda/index.js'
+
 import * as DB from './app/config/db.config.js'
 
 import routes from './app/routes/index.js'
@@ -43,6 +45,9 @@ app.get("/", (req, res) => {
 await routes(app)
 
 await DB.init()
+
+// Start agenda
+await agenda.init()
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080
