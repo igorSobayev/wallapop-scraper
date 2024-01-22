@@ -6,6 +6,7 @@ import TrackModel from '../../repository/tracks/track.model.js'
 import ScrapAction from './actions/tracks.scrap.action.js'
 import TrackHistoryModel from '../../repository/tracksHistory/trackHistory.model.js'
 
+ // TODO: Añadir limitación para que no puedan ejecutar sin parar esta acción, poner p.e que manualmente puedan actualizar cada 10 mins
 export default async function updateUserTracksInfo ({ userId }) {
     if (!userId) {
         throw VError('userId is missing')
