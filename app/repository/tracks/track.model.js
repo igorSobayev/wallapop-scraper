@@ -56,6 +56,11 @@ const Track = new mongoose.Schema({
     default: false,
   },
 
+  archived: {
+    type: Boolean,
+    default: false,
+  },
+
   deleted: {
     type: Boolean,
     default: false,
