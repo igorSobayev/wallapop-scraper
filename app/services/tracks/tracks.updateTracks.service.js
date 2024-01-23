@@ -15,7 +15,7 @@ export default async function updateTracks ({ trackUpdatePreference }) {
     
     const usersIds = users.map(user => user._id)
 
-    const tracksToUpdate = await TrackModel.find({ user: { $in: usersIds } })
+    const tracksToUpdate = await TrackModel.find({ user: { $in: usersIds }, deleted: false })
 
     let updatedTracks = 0
     const trackHistoryToInsert = []

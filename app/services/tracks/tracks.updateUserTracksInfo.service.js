@@ -18,7 +18,7 @@ export default async function updateUserTracksInfo ({ userId }) {
         throw VError(`user with ID ${userId} is missing`)
     }
 
-    const tracksToUpdate = await TrackModel.find({ user: user._id })
+    const tracksToUpdate = await TrackModel.find({ user: user._id, deleted: false })
 
     let updatedTracks = 0
     const trackHistoryToInsert = []
