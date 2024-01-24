@@ -60,6 +60,13 @@ const Track = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  archivedDate: {
+    type: Date
+  },
+  archivedBy: {
+    type: mongoose.Types.ObjectId,
+    ref: 'User',
+  },
 
   deleted: {
     type: Boolean,
