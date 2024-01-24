@@ -25,7 +25,7 @@ export default async function archiveTrack ({ userId, trackId }) {
         throw VError(`Track with ID ${trackId} is missing`)
     }
 
-    if (track.user !== user._id) {
+    if (track.user.toString() !== user._id.toString()) {
         throw VError(`Track with ID ${trackId} not belongs to the user ${userId}`)
     }
 

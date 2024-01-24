@@ -21,6 +21,7 @@ export default async function loadTracks({ userId }) {
             $match: {
                 user: new mongoose.Types.ObjectId(userId),
                 deleted: false,
+                archived: false,
             }
         },
         {
