@@ -33,11 +33,13 @@ export default async function scrap({ link }) {
             },
         })
 
+        const rawPrice =  data.price.slice(0, -2).replace(',', '.') // TODO: move to utils
+
         const productData = {
             title: data.title,
             views: data.views,
             favs: data.favs,
-            price: data.price.slice(0, -2),
+            price: Number(rawPrice),
             delivery: Boolean(data.delivery),
             deliveryInfo: data.deliveryInfo, // TODO
             location: data.location,
