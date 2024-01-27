@@ -2,10 +2,16 @@ import VError from 'verror'
 
 import UserModel from '../../repository/users/user.model.js'
 import TrackModel from '../../repository/tracks/track.model.js'
-
-import ScrapAction from './actions/tracks.scrap.action.js'
 import TrackHistoryModel from '../../repository/tracksHistory/trackHistory.model.js'
 
+import ScrapAction from './actions/tracks.scrap.action.js'
+import BuildHistoryObjectAction from '../tracksHistory/actions/tracksHistory.buildHistoryObject.action.js'
+
+
+/**
+ * Job to update all the tracks of the users
+ * @returns 
+ */
 export default async function updateTracks ({ trackUpdatePreference }) {
     if (!trackUpdatePreference) {
         throw VError('trackUpdatePreference is missing')
@@ -31,21 +37,7 @@ export default async function updateTracks ({ trackUpdatePreference }) {
             const newTrackData = await ScrapAction({ link: track.link })
 
             // Save the history (old track info)
-            const trackHistory = {
-                user: track.user,
-                trackId: track._id,
-                title: track.title,
-                views: track.views,
-                favs: track.favs,
-                price: track.price,
-                delivery: track.delivery,
-                deliveryInfo: track.deliveryInfo,
-                location: track.location,
-                description: track.description,
-                sold: track.sold,
-                reserved: track.reserved,
-                updateDate: track.updateDate,
-            }
+            const trackHistory = BuildHistoryObjectAction({ oldTrack: trackToUpdate })
 
             trackHistoryToInsert.push(trackHistory)
 
@@ -60,6 +52,7 @@ export default async function updateTracks ({ trackUpdatePreference }) {
             trackToUpdate.description = newTrackData.description
             trackToUpdate.sold = newTrackData.sold
             trackToUpdate.reserved = newTrackData.reserved
+            trackToUpdate.previewImg = newTrackData.previewImg
             trackToUpdate.updateDate = new Date()
             
             await trackToUpdate.save()

@@ -5,6 +5,7 @@ import TrackModel from '../../repository/tracks/track.model.js'
 import TrackHistoryModel from '../../repository/tracksHistory/trackHistory.model.js'
 
 import ScrapAction from './actions/tracks.scrap.action.js'
+import BuildHistoryObjectAction from '../tracksHistory/actions/tracksHistory.buildHistoryObject.action.js'
 
 export default async function syncTrack ({ userId, trackId }) {
     if (!userId) {
@@ -35,21 +36,7 @@ export default async function syncTrack ({ userId, trackId }) {
     const newTrackData = await ScrapAction({ link: track.link })
 
     // Save the history (old track info)
-    const trackHistory = new TrackHistoryModel({
-        user: track.user,
-        trackId: track._id,
-        title: track.title,
-        views: track.views,
-        favs: track.favs,
-        price: track.price,
-        delivery: track.delivery,
-        deliveryInfo: track.deliveryInfo,
-        location: track.location,
-        description: track.description,
-        sold: track.sold,
-        reserved: track.reserved,
-        updateDate: track.updateDate,
-    })
+    const trackHistory = new TrackHistoryModel(BuildHistoryObjectAction({ oldTrack: track }))
 
     // Update the info in the track
     track.title = newTrackData.title
@@ -62,6 +49,7 @@ export default async function syncTrack ({ userId, trackId }) {
     track.description = newTrackData.description
     track.sold = newTrackData.sold
     track.reserved = newTrackData.reserved
+    track.previewImg = newTrackData.previewImg
     track.updateDate = new Date()
     
     await track.save()
