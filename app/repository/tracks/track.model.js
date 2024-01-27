@@ -55,6 +55,9 @@ const Track = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  previewImg: {
+    type: String,
+  },
 
   archived: {
     type: Boolean,
@@ -66,6 +69,11 @@ const Track = new mongoose.Schema({
   archivedBy: {
     type: mongoose.Types.ObjectId,
     ref: 'User',
+  },
+
+  deletedFromPlatform: {
+    type: Boolean,
+    default: false,
   },
 
   deleted: {

@@ -44,6 +44,9 @@ const TrackHistory = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  previewImg: {
+    type: String,
+  },
   updateDate: {
     type: Date,
   },
