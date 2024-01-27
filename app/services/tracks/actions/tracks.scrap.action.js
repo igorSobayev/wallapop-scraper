@@ -31,9 +31,15 @@ export default async function scrap({ link }) {
                 selector: '.item-detail-flags_ItemDetailFlags--midBlue__R1Wwl', // TODO
                 how: 'html'
             },
+            previewImg: {
+                selector: 'div.mx-3:nth-child(1)',
+                attr: 'style'
+            }
         })
 
-        const rawPrice =  data.price.slice(0, -2).replace(',', '.') // TODO: move to utils
+        const rawPrice =  _formatPrice(data.price)
+
+        const previewImg = _getPreviewImg(data.previewImg)
 
         const productData = {
             title: data.title,
@@ -45,6 +51,7 @@ export default async function scrap({ link }) {
             location: data.location,
             description: data.description,
             sold: Boolean(data.sold),
+            previewImg,
         }
     
         return productData
@@ -52,4 +59,23 @@ export default async function scrap({ link }) {
     } catch (e) {
         throw VError(e)
     }
+}
+
+function _getPreviewImg (img) {
+    // Expresión regular para encontrar la URL entre paréntesis y hasta el signo de interrogación
+    const regex = /url\((.*?)\?/;
+
+    // Aplicar la expresión regular al string
+    const match = img.match(regex);
+
+    // Si hay un match, la URL estará en el grupo de captura (match[1])
+    if (match && match[1]) {
+        return match[1];
+    } else {
+        return ''
+    }
+}
+
+function _formatPrice (rawPrice) {
+    return rawPrice.slice(0, -2).replace(',', '.')
 }
