@@ -20,7 +20,7 @@ export default async function updateUserTracksInfo ({ userId }) {
     }
 
     // Tracks to be updated have to be not deleted, not sold and not archived
-    const tracksToUpdate = await TrackModel.find({ user: user._id, deleted: false, archived: false, sold: false })
+    const tracksToUpdate = await TrackModel.find({ user: user._id, deleted: false, archived: false, sold: false, deletedFromPlatform: false })
 
     let updatedTracks = 0
     const trackHistoryToInsert = []

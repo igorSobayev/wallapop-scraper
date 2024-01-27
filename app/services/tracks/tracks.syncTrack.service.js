@@ -33,6 +33,10 @@ export default async function syncTrack ({ userId, trackId }) {
         throw VError(`Track with ID ${trackId} not belongs to the user ${userId}`)
     }
 
+    if (track.deletedFromPlatform) {
+        throw VError(`Track with ID ${trackId} is deleted from the platform`)
+    }
+
     const newTrackData = await ScrapAction({ link: track.link })
 
     if (newTrackData.deletedFromPlatform) {

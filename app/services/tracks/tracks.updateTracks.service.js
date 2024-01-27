@@ -22,7 +22,7 @@ export default async function updateTracks ({ trackUpdatePreference }) {
     const usersIds = users.map(user => user._id)
 
     // Tracks to be updated have to be not deleted, not sold and not archived
-    const tracksToUpdate = await TrackModel.find({ user: { $in: usersIds }, deleted: false, sold: false, archived: false })
+    const tracksToUpdate = await TrackModel.find({ user: { $in: usersIds }, deleted: false, sold: false, archived: false, deletedFromPlatform: false })
 
     let updatedTracks = 0
     const trackHistoryToInsert = []
