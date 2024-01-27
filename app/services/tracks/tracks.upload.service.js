@@ -35,6 +35,11 @@ export default async function upload({ userId, tracks }) {
         try {
             const scrapedTrack = await ScrapAction({ link: track })
 
+            if (scrapedTrack.deletedFromPlatform) {
+                console.log('TRACK DELETED FROM PLATFORM:', track)
+                continue
+            }
+
             scrapedTrack.user = userId
             scrapedTrack.tag = GenerateTagAction()
             scrapedTrack.platform = shared.AVAILABLE_PLATFORMS.WALLAPOP

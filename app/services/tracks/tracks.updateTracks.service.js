@@ -36,6 +36,14 @@ export default async function updateTracks ({ trackUpdatePreference }) {
 
             const newTrackData = await ScrapAction({ link: track.link })
 
+            if (newTrackData.deletedFromPlatform) {
+                trackToUpdate.deletedFromPlatform = newTrackData.deletedFromPlatform
+        
+                await trackToUpdate.save()
+                console.log('TRACK DELETED FROM PLATFORM:', trackToUpdate.link)
+                continue
+            }
+
             // Save the history (old track info)
             const trackHistory = BuildHistoryObjectAction({ oldTrack: trackToUpdate })
 
