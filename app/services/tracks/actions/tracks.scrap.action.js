@@ -57,6 +57,13 @@ export default async function scrap({ link }) {
         return productData
 
     } catch (e) {
+        // If the product was deleted from the platform
+        if (e.response.status === 404) {
+            return {
+                deletedFromPlatform: true
+            }
+        }
+
         throw VError(e)
     }
 }
