@@ -17,7 +17,7 @@ export default async function updateTracks ({ trackUpdatePreference }) {
         throw VError('trackUpdatePreference is missing')
     }
 
-    const users = await UserModel.find({ trackUpdatePreference, deleted: false  })
+    const users = await UserModel.find({ trackUpdatePreference: { $in: trackUpdatePreference }, deleted: false  })
     
     const usersIds = users.map(user => user._id)
 
