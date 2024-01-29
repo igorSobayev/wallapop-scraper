@@ -11,22 +11,22 @@ async function init() {
 
     agenda.define('syncDaily', async job => {
         console.log('RUNNING syncDaily job at:', new Date())
-        await updateTracksService({ trackUpdatePreference: [shared.PLANS_CONFIG.DAILY, shared.PLANS_CONFIG.TWICE, shared.PLANS_CONFIG.SIX_HOURS, shared.PLANS_CONFIG.THREE_HOURS, shared.PLANS_CONFIG.ONE_HOUR] })
+        await updateTracksService({ trackUpdatePreference: [shared.PLANS_CONFIG.DAILY] })
     })
 
     agenda.define('syncTwice', async job => {
         console.log('RUNNING syncTwice job at:', new Date())
-        await updateTracksService({ trackUpdatePreference: [shared.PLANS_CONFIG.TWICE, shared.PLANS_CONFIG.SIX_HOURS, shared.PLANS_CONFIG.THREE_HOURS, shared.PLANS_CONFIG.ONE_HOUR] })
+        await updateTracksService({ trackUpdatePreference: [shared.PLANS_CONFIG.TWICE] })
     })
 
     agenda.define('syncSixHours', async job => {
         console.log('RUNNING syncSixHours job at:', new Date())
-        await updateTracksService({ trackUpdatePreference: [shared.PLANS_CONFIG.SIX_HOURS, shared.PLANS_CONFIG.THREE_HOURS, shared.PLANS_CONFIG.ONE_HOUR] })
+        await updateTracksService({ trackUpdatePreference: [shared.PLANS_CONFIG.SIX_HOURS] })
     })
 
     agenda.define('syncThreeHours', async job => {
         console.log('RUNNING syncThreeHours job at:', new Date())
-        await updateTracksService({ trackUpdatePreference: [shared.PLANS_CONFIG.THREE_HOURS, shared.PLANS_CONFIG.ONE_HOUR] })
+        await updateTracksService({ trackUpdatePreference: [shared.PLANS_CONFIG.THREE_HOURS] })
     })
 
     agenda.define('syncOneHour', async job => {
@@ -38,103 +38,53 @@ async function init() {
     await agenda.start();
     console.log('AGENDA STARTED')
 
+    const nextRunStartDay = _GetNextRun()
+
     // Run sync tracks every day at 12:00 AM (timezone: 'Europe/Madrid')
     await agenda.every('0 0 * * *', 'syncDaily', {
         timezone: 'Europe/Madrid',
     })
 
-    await agenda.every('0 1 * * *', 'syncOneHour', {
+    await agenda.every('0 */12 * * *', 'syncTwice', {
+        skipImmediate: true,
+        nextRunAt: nextRunStartDay,
         timezone: 'Europe/Madrid',
     })
 
-    await agenda.every('0 2 * * *', 'syncOneHour', {
+    agenda.every('0 */6 * * *', 'syncSixHours', { 
+        skipImmediate: true,
+        nextRunAt: nextRunStartDay,
         timezone: 'Europe/Madrid',
     })
 
-    await agenda.every('0 3 * * *', 'syncThreeHours', {
+    agenda.every('0 */3 * * *', 'syncThreeHours', { 
+        skipImmediate: true,
+        nextRunAt: nextRunStartDay,
         timezone: 'Europe/Madrid',
     })
 
-    await agenda.every('0 4 * * *', 'syncOneHour', {
-        timezone: 'Europe/Madrid',
-    })
-
-    await agenda.every('0 5 * * *', 'syncOneHour', {
-        timezone: 'Europe/Madrid',
-    })
-
-    await agenda.every('0 6 * * *', 'syncSixHours', {
-        timezone: 'Europe/Madrid',
-    })
-
-    await agenda.every('0 7 * * *', 'syncOneHour', {
-        timezone: 'Europe/Madrid',
-    })
-
-    await agenda.every('0 8 * * *', 'syncOneHour', {
-        timezone: 'Europe/Madrid',
-    })
-
-    await agenda.every('0 9 * * *', 'syncThreeHours', {
-        timezone: 'Europe/Madrid',
-    })
-
-    await agenda.every('0 10 * * *', 'syncOneHour', {
-        timezone: 'Europe/Madrid',
-    })
-
-    await agenda.every('0 11 * * *', 'syncOneHour', {
-        timezone: 'Europe/Madrid',
-    })
-
-    await agenda.every('0 12 * * *', 'syncTwice', {
-        timezone: 'Europe/Madrid',
-    })
-
-    await agenda.every('0 13 * * *', 'syncOneHour', {
-        timezone: 'Europe/Madrid',
-    })
-
-    await agenda.every('0 14 * * *', 'syncOneHour', {
-        timezone: 'Europe/Madrid',
-    })
-
-    await agenda.every('0 15 * * *', 'syncThreeHours', {
-        timezone: 'Europe/Madrid',
-    })
-
-    await agenda.every('0 16 * * *', 'syncOneHour', {
-        timezone: 'Europe/Madrid',
-    })
-
-    await agenda.every('0 17 * * *', 'syncOneHour', {
-        timezone: 'Europe/Madrid',
-    })
-    await agenda.every('0 18 * * *', 'syncSixHours', {
-        timezone: 'Europe/Madrid',
-    })
-
-    await agenda.every('0 19 * * *', 'syncOneHour', {
-        timezone: 'Europe/Madrid',
-    })
-
-    await agenda.every('0 20 * * *', 'syncOneHour', {
-        timezone: 'Europe/Madrid',
-    })
-
-    await agenda.every('0 21 * * *', 'syncThreeHours', {
-        timezone: 'Europe/Madrid',
-    })
-
-    await agenda.every('0 22 * * *', 'syncOneHour', {
-        timezone: 'Europe/Madrid',
-    })
-
-    await agenda.every('0 23 * * *', 'syncOneHour', {
+    agenda.every('0 */1 * * *', 'syncOneHour', { 
+        skipImmediate: true,
+        nextRunAt: nextRunStartDay,
         timezone: 'Europe/Madrid',
     })
 }
 
+
+function _GetNextRun () {
+    // Obtener la fecha y hora actual en el timezone 'Europe/Madrid'
+    const now = new Date()
+    const nowTimezone = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Madrid' }))
+
+    // Calcular la próxima ejecución a las 12 de la noche o la siguiente más cercana en 'Europe/Madrid'
+    const nextRunStartDay = new Date(nowTimezone)
+    nextRunStartDay.setHours(12, 0, 0, 0)
+    if (nowTimezone > nextRunStartDay) {
+        nextRunStartDay.setDate(nextRunStartDay.getDate() + 1)
+    }
+
+    return nextRunStartDay
+}
 
 export default {
     init
