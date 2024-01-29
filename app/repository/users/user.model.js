@@ -26,7 +26,7 @@ const User = new mongoose.Schema({
     required: true,
     default: shared.PLANS.FREE,
   },
-  tracksCounter: {
+  tracksCounter: { // TODO: update this data
     type: Number,
     default: 0
   },
