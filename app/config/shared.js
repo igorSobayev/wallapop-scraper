@@ -6,9 +6,8 @@ const config = {
     },
     PLANS: {
         'FREE': 'free',
-        'BASIC': 'basic',
         'MEDIUM': 'medium',
-        'UNLIMITED': 'unlimited',
+        'PREMIUM': 'premium',
     },
     PLANS_CONFIG: {
         'DAILY': 'daily',
