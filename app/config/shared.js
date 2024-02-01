@@ -11,11 +11,11 @@ const config = {
     },
     PLANS_DETAILS: {
         'medium': {
-            'price': 5,
+            'price': 500,
             'quantity': 1,
         },
         'premium': {
-            'price': 10,
+            'price': 1000,
             'quantity': 1,
         },
     },
