@@ -20,6 +20,8 @@ router.post('/upload-file/:id', [authJwt.verifyUserAndToken], uploader.single('f
 router.post('/upload-multiple-files/:id', [authJwt.verifyUserAndToken], uploader.array('file[]'), uploadMultipleFiles)
 router.post('/delete-files/:id', [authJwt.verifyUserAndToken], deleteFiles)
 
+router.post('/create-checkout-session/:id', [authJwt.verifyUserAndToken], deleteFiles)
+
 // Public endpoints
 router.put('/public/:username', publicDetails)
 
