@@ -7,6 +7,11 @@ const User = new mongoose.Schema({
     unique: true,
     required: true,
   },
+  // Payment provider ID
+  customerId: {
+    type: String,
+    unique: true,
+  },
   email: {
     type: String,
     unique: true,
