@@ -1,18 +1,16 @@
 import VError from 'verror'
-import Stripe from 'stripe'
+import Stripe from './../../../components/stripe/index.js'
 
 import shared from './../../../config/shared.js'
 
 import UserModel from '../../../repository/users/user.model.js'
 
-const stripe = new Stripe(process.env.STRIPE_KEY)
-
-export default async function createCheckoutSession ({ userId, plan }) {
+export default async function createCheckoutSession ({ userId, plan, returnPage }) {
     if (!userId) {
       throw VError('userId is missing')
     }
 
-    if (!shared.PLANS.includes(plan)) {
+    if (!Object.values(shared.PLANS).includes(plan)) {
       throw VError(`The plan ${plan} is not valid`)
     }
 
@@ -22,22 +20,7 @@ export default async function createCheckoutSession ({ userId, plan }) {
       throw VError(`User with ID ${userId} not exist or is deleted`)
     }
 
-    const sessionData = {
-      line_items: [
-        {
-          ...shared.PLANS_DETAILS[plan]
-        },
-      ],
-      mode: 'payment',
-      success_url: `${env.process.DOMAIN_URL}/success.html`,
-      cancel_url: `${env.process.DOMAIN_URL}/cancel.html`,
-    }
-
-    if (user.customerId) {
-      sessionData.customer = user.customerId
-    }
-
-    const session = await stripe.checkout.sessions.create(sessionData)
+    const session = await Stripe.createCheckoutSession(plan, user.customerId, returnPage)
 
     return session
 }
