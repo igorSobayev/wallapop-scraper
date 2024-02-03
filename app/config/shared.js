@@ -9,16 +9,6 @@ const config = {
         'MEDIUM': 'medium',
         'PREMIUM': 'premium',
     },
-    PLANS_DETAILS: {
-        'medium': {
-            'price': 500,
-            'quantity': 1,
-        },
-        'premium': {
-            'price': 1000,
-            'quantity': 1,
-        },
-    },
     PLANS_CONFIG: {
         'DAILY': 'daily',
         'TWICE': 'twice',
