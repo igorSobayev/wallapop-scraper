@@ -6,6 +6,7 @@ import uploadFile from '../controllers/users/users.uploadFile.controller.js'
 import uploadMultipleFiles from '../controllers/users/users.uploadMultipleFiles.controller.js'
 import deleteFiles from '../controllers/users/users.deleteFiles.controller.js'
 import createCheckoutSession from '../controllers/users/users.createCheckoutSession.controller.js'
+import webhooks from './../components/stripe/webhooks.js'
 
 import express from 'express'
 import multer from 'multer'
@@ -22,6 +23,7 @@ router.post('/upload-multiple-files/:id', [authJwt.verifyUserAndToken], uploader
 router.post('/delete-files/:id', [authJwt.verifyUserAndToken], deleteFiles)
 
 router.post('/create-checkout-session/:id', [authJwt.verifyUserAndToken], createCheckoutSession)
+router.post('/webhook', webhooks)
 
 // Public endpoints
 router.put('/public/:username', publicDetails)
