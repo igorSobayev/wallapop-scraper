@@ -5,7 +5,7 @@ import shared from './../../config/shared.js'
 
 const stripe = new Stripe(process.env.STRIPE_KEY)
 
-async function createCheckoutSession (plan, customerId, returnPage) {
+async function createCheckoutSession (plan, customerId, returnPage, succeededPage) {
 
     if (!Object.values(shared.PLANS).includes(plan)) {
         throw VError(`The plan ${plan} is not valid`)
@@ -30,8 +30,8 @@ async function createCheckoutSession (plan, customerId, returnPage) {
           },
         ],
         mode: 'payment',
-        success_url: `${process.env.DOMAIN_URL}/success.html`, // TODO
-        cancel_url: returnPage, // TODO
+        success_url: succeededPage,
+        cancel_url: returnPage,
     }
   
     if (customerId) {

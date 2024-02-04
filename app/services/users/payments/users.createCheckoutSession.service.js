@@ -5,7 +5,7 @@ import shared from './../../../config/shared.js'
 
 import UserModel from '../../../repository/users/user.model.js'
 
-export default async function createCheckoutSession ({ userId, plan, returnPage }) {
+export default async function createCheckoutSession ({ userId, plan, returnPage, succeededPage }) {
     if (!userId) {
       throw VError('userId is missing')
     }
@@ -20,7 +20,7 @@ export default async function createCheckoutSession ({ userId, plan, returnPage 
       throw VError(`User with ID ${userId} not exist or is deleted`)
     }
 
-    const session = await Stripe.createCheckoutSession(plan, user.customerId, returnPage)
+    const session = await Stripe.createCheckoutSession(plan, user.customerId, returnPage, succeededPage)
 
     return session
 }
