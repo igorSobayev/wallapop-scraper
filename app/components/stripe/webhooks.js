@@ -7,8 +7,6 @@ export default async function webhooks (req, res, next) {
     const event = payload.type
     const eventObject = payload.data.object
 
-    console.log("Got payload: " + payload)
-
     switch(event) {
         case 'checkout.session.completed':
             await checkoutCompletedService({ eventObject })
