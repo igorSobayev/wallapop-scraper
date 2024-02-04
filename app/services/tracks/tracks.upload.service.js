@@ -24,12 +24,20 @@ export default async function upload({ userId, tracks }) {
     }
 
     const tracksToInsert = []
+    let tracksToInsertCount = 0
 
     for (const track of tracks) {
         // First check if track already exist TODO if deleted, enable it again
         const existTrack = await TrackModel.findOne({ user: userId, link: track })
 
-        if (existTrack) continue
+        if (existTrack) {
+            existTrack.deleted = false
+            await existTrack.save()
+
+            tracksToInsertCount++
+
+            continue
+        }
 
         // Get the data from the web
         try {
@@ -48,12 +56,21 @@ export default async function upload({ userId, tracks }) {
             scrapedTrack.creationDate = new Date()
 
             tracksToInsert.push(scrapedTrack)
+
+            tracksToInsertCount++
         } catch (e) {
             console.log(e)
             continue
         }
     }
 
+    // Update the user track counter
+    if (tracksToInsertCount > 0) {
+        user.tracksCounter += tracksToInsertCount
+
+        await user.save()
+    }
+    
     // Check if there is tracks to insert
     if (!tracksToInsert.length || tracksToInsert.length === 0) return
 

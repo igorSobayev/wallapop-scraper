@@ -34,4 +34,8 @@ export default async function archiveTrack ({ userId, trackId }) {
     track.deletedDate = new Date()
 
     await track.save()
+
+    user.tracksCounter -= 1
+    
+    await user.save()
 }
