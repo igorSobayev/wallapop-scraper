@@ -20,7 +20,7 @@ export default async function createCheckoutSession ({ userId, plan, returnPage,
       throw VError(`User with ID ${userId} not exist or is deleted`)
     }
 
-    const session = await Stripe.createCheckoutSession(plan, user.customerId, returnPage, succeededPage)
+    const session = await Stripe.createCheckoutSession({ plan, user, returnPage, succeededPage })
 
     return session
 }
