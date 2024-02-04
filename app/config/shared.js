@@ -9,6 +9,17 @@ const config = {
         'MEDIUM': 'medium',
         'PREMIUM': 'premium',
     },
+    PLANS_DETAILS: {
+        'FREE': {
+            'MAX_TRACKS': 5,
+        },
+        'MEDIUM': {
+            'MAX_TRACKS': 30,
+        },
+        'PREMIUM': {
+            'MAX_TRACKS': 100,
+        },
+    },
     PLANS_CONFIG: {
         'DAILY': 'daily',
         'TWICE': 'twice',
