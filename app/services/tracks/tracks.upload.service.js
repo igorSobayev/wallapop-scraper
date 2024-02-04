@@ -32,6 +32,7 @@ export default async function upload({ userId, tracks }) {
 
         if (existTrack) {
             existTrack.deleted = false
+            existTrack.archived = false
             await existTrack.save()
 
             tracksToInsertCount++
