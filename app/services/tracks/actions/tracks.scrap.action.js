@@ -41,9 +41,11 @@ export default async function scrap({ link }) {
 
         const previewImg = _getPreviewImg(data.previewImg)
 
+        const rawViews = _getViewsFormated(data.views)
+
         const productData = {
             title: data.title,
-            views: data.views,
+            views: rawViews,
             favs: data.favs,
             price: Number(rawPrice),
             delivery: Boolean(data.delivery),
@@ -68,16 +70,28 @@ export default async function scrap({ link }) {
     }
 }
 
+function _getViewsFormated(numero) {
+    // Si el número es una cadena que termina con 'K', lo formateamos
+    const match = numero.match(/^(\d+(\.\d{1,2})?)K$/i)
+
+    if (match) {
+        return parseFloat(match[1]) * 1000
+    }
+
+    // Si no es una cadena válida o no termina con 'K', devolvemos el número original
+    return parseFloat(numero)
+  }
+
 function _getPreviewImg (img) {
     // Expresión regular para encontrar la URL entre paréntesis y hasta el signo de interrogación
-    const regex = /url\((.*?)\?/;
+    const regex = /url\((.*?)\?/
 
     // Aplicar la expresión regular al string
-    const match = img.match(regex);
+    const match = img.match(regex)
 
     // Si hay un match, la URL estará en el grupo de captura (match[1])
     if (match && match[1]) {
-        return match[1];
+        return match[1]
     } else {
         return ''
     }
