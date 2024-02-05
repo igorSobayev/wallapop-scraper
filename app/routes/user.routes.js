@@ -8,6 +8,8 @@ import deleteFiles from '../controllers/users/users.deleteFiles.controller.js'
 import createCheckoutSession from '../controllers/users/users.createCheckoutSession.controller.js'
 import webhooks from './../components/stripe/webhooks.js'
 
+import changeTrackUpdatePreference from '../controllers/users/users.changeTrackUpdatePreference.controller.js'
+
 import express from 'express'
 import multer from 'multer'
 
@@ -24,6 +26,8 @@ router.post('/delete-files/:id', [authJwt.verifyUserAndToken], deleteFiles)
 
 router.post('/create-checkout-session/:id', [authJwt.verifyUserAndToken], createCheckoutSession)
 router.post('/webhook', webhooks)
+
+router.put('/track-update-preference', [authJwt.verifyUserAndToken], changeTrackUpdatePreference)
 
 // Public endpoints
 router.put('/public/:username', publicDetails)
