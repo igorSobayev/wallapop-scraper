@@ -52,6 +52,19 @@ const User = new mongoose.Schema({
     type: String,
   },
 
+  active: {
+    type: Boolean,
+    default: false,
+  },
+
+  verificationDate: {
+    type: Date
+  },
+
+  registerCode: {
+    type: String,
+  },
+
   deleted: {
     type: Boolean,
     default: false,
