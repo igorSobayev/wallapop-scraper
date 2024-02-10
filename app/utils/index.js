@@ -1,5 +1,6 @@
 import Validator from 'better-validator'
 import VError from 'verror'
+import crypto from 'crypto'
 
 /**
  * Validates a request with the specified validation schema
@@ -26,7 +27,15 @@ function validateRequest (request, validations) {
     if (validator.run().length) return new VError.WError({name: 'FieldsValidationError', info: errors}, 'Fail validating fields')
 }
 
+function randomString (length) {
+  if (length % 2 !== 0) {
+    length++
+  }
+
+  return crypto.randomBytes(length / 2).toString("hex")
+}
 
 export default {
-    validateRequest,
+  validateRequest,
+  randomString,
 }
