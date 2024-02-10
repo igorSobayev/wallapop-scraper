@@ -1,20 +1,26 @@
-import bcrypt from 'bcryptjs'
-import User from './../../repository/users/user.model.js'
-import config from './../../config/shared.js'
+import Utils from '../../utils/index.js'
 
-export default async function signup (req, res) {
+import SignupService from '../../services/users/auth/users.signup.service.js'
+
+export default async function signup (req, res, next) {
   try {
-    const user = new User({
-      username: req.body.username,
-      email: req.body.email,
-      password: bcrypt.hashSync(req.body.password, 8),
-      role: config.ROLES.USER,
-      creationDate: new Date(),
+    let errors = Utils.validateRequest(req, ({ body }) => {
+      body('email').isString().required()
+      body('username').isString().required()
+      body('password').isString().required()
     })
 
-    await user.save()
+    if (errors) next(errors)
 
-    res.send({ message: 'User was registered successfully!' })
+    const userData = {
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+    }
+
+    await SignupService({ userData })
+
+    res.send({ message: 'User register request is ongoing, use the code in your email to finish the process!' })
   } catch (err) {
     res.status(500).send({ message: err.message })
   }
