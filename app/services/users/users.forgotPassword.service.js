@@ -1,10 +1,10 @@
 import VError from 'verror'
-import bcrypt from 'bcryptjs'
-import crypto from 'crypto'
 
 import Mailer from '../../components/mailer/index.js'
 
 import UserModel from '../../repository/users/user.model.js'
+
+import Utils from '../../utils/index.js'
 
 export default async function forgotPassword ({ email }) {
     if (!email) {
@@ -17,7 +17,7 @@ export default async function forgotPassword ({ email }) {
         throw VError(`User with email ${email} not exist`)
     }
 
-    const resetCode = randomString(6)
+    const resetCode = Utils.randomString(6)
 
     user.forgotPasswordCode = resetCode
 
@@ -33,11 +33,3 @@ export default async function forgotPassword ({ email }) {
       console.log(error)
     }
 }
-
-function randomString(length) {
-    if (length % 2 !== 0) {
-      length++
-    }
-  
-    return crypto.randomBytes(length / 2).toString("hex")
-  }
