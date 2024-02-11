@@ -9,6 +9,8 @@ import deleteTrack from '../controllers/tracks/tracks.deleteTrack.controller.js'
 import archiveTrack from '../controllers/tracks/tracks.archiveTrack.controller.js'
 import syncTrack from '../controllers/tracks/tracks.syncTrack.controller.js'
 
+import uploadDemo from '../controllers/tracks/tracks.uploadDemo.controller.js'
+
 
 // Others
 import express from 'express'
@@ -21,5 +23,8 @@ router.post('/update-user-tracks-info', [authJwt.verifyUserAndToken], updateUser
 router.delete('/delete/:id', [authJwt.verifyUserAndToken], deleteTrack)
 router.put('/archive/:id', [authJwt.verifyUserAndToken], archiveTrack)
 router.put('/sync-track/:id', [authJwt.verifyUserAndToken], syncTrack)
+
+// Public
+router.post('/upload-demo', uploadDemo)
 
 export default router
