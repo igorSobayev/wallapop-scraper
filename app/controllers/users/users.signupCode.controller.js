@@ -19,3 +19,4 @@ export default async function signupCode (req, res) {
       res.status(400).send({ name: err.name, message: err.message })
     }
   }
+  

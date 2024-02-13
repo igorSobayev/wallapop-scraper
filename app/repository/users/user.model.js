@@ -10,7 +10,6 @@ const User = new mongoose.Schema({
   // Payment provider ID
   customerId: {
     type: String,
-    unique: true,
   },
   email: {
     type: String,
