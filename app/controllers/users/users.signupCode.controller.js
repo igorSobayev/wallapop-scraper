@@ -12,9 +12,11 @@ export default async function signupCode (req, res) {
 
       const { username, code } = req.query
 
-      await SignupCodeService({ username, code })
+      const loggedUser = await SignupCodeService({ username, code })
 
-      return res.status(200).send({ message: 'User verified successfully!' })
+      req.session.token = loggedUser.jwt_token
+
+      res.status(200).send(loggedUser)
     } catch (err) {
       res.status(400).send({ name: err.name, message: err.message })
     }

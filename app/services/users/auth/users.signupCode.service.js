@@ -2,6 +2,9 @@ import VError from 'verror'
 
 import UserModel from '../../../repository/users/user.model.js'
 
+import GenerateTokenAction from './actions/users.generateToken.action.js'
+import BuildLoggedUserAction from './actions/users.buildLoggedUser.action.js'
+
 export default async function signupCode ({ username, code }) {
     if (!username) {
         throw VError('username is missing')
@@ -29,4 +32,8 @@ export default async function signupCode ({ username, code }) {
     user.verificationDate = new Date()
 
     await user.save()
+
+    const token = GenerateTokenAction({ userId: user._id })
+
+    return BuildLoggedUserAction({ user, token })
 }
