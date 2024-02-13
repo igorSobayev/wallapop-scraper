@@ -12,7 +12,7 @@ import express from 'express'
 const router = express.Router()
 
 router.post('/signup', [verifySignUp.checkDuplicateUsernameOrEmail], signup)
-router.get('/signup/verify', signupCode)
+router.post('/signup/verify', signupCode)
 router.post('/signin', signin)
 router.post('/signout', signout)
 
