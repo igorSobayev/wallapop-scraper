@@ -10,13 +10,13 @@ const config = {
         'PREMIUM': 'premium',
     },
     PLANS_DETAILS: {
-        'FREE': {
+        'free': {
             'MAX_TRACKS': 5,
         },
-        'MEDIUM': {
+        'medium': {
             'MAX_TRACKS': 30,
         },
-        'PREMIUM': {
+        'premium': {
             'MAX_TRACKS': 100,
         },
     },

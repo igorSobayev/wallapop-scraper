@@ -14,6 +14,6 @@ export default async function upload (req, res, next) {
 
     res.send({ message: 'Tracks was uploaded successfully!' })
   } catch (err) {
-    res.status(500).send({ message: err.message })
+    res.status(400).send({ name: err.name, message: err.message })
   }
 }

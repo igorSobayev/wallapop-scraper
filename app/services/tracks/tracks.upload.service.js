@@ -23,12 +23,22 @@ export default async function upload({ userId, tracks }) {
         throw VError('User is missing or deleted')
     }
 
+    const maxTracks = shared.PLANS_DETAILS[user.plan].MAX_TRACKS
+
+    if (user.tracksCounter >= maxTracks) {
+        throw VError({ name: 'MaxTracksReachedError' }, `You cant add more tracks with your plan`)
+    }
+
     const tracksToInsert = []
     let tracksToInsertCount = 0
 
     for (const track of tracks) {
-        // First check if track already exist TODO if deleted, enable it again
         const existTrack = await TrackModel.findOne({ user: userId, link: track })
+
+        // If the user tracks count is already reached, leave
+        if ((user.tracksCounter + tracksToInsertCount) >= maxTracks) {
+            continue
+        }
 
         if (existTrack) {
             existTrack.deleted = false
