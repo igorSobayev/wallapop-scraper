@@ -44,6 +44,7 @@ export default async function signup ({ userData }) {
        password: bcrypt.hashSync(password, 8),
        role: shared.ROLES.USER,
        registerCode,
+       conditionsCheck: true,
     })
 
     await user.save()
