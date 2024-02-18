@@ -37,6 +37,10 @@ const User = new mongoose.Schema({
     type: String,
     default: shared.PLANS_CONFIG.DAILY,
   },
+  lastManualUpdate: {
+    type: Date
+  },
+
   conditionsCheck: {
     type: Boolean,
     default: false,

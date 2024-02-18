@@ -7,7 +7,12 @@ import TrackHistoryModel from '../../repository/tracksHistory/trackHistory.model
 import ScrapAction from './actions/tracks.scrap.action.js'
 import BuildHistoryObjectAction from '../tracksHistory/actions/tracksHistory.buildHistoryObject.action.js'
 
- // TODO: Añadir limitación para que no puedan ejecutar sin parar esta acción, poner p.e que manualmente puedan actualizar cada 10 mins
+import shared from './../../config/shared.js'
+
+/**
+ * Update all the tracks info of the given user, this action can be done only by premium user once every hour
+ * The admin users can do it any time
+ */
 export default async function updateUserTracksInfo ({ userId }) {
     if (!userId) {
         throw VError('userId is missing')
@@ -17,6 +22,18 @@ export default async function updateUserTracksInfo ({ userId }) {
 
     if (!user) {
         throw VError(`user with ID ${userId} is missing`)
+    }
+
+    const isAdmin = user.role === shared.ROLES.ADMIN
+
+    if (user.plan !== shared.PLANS.PREMIUM && !isAdmin) {
+        throw VError({ name: 'InvalidPlanOnUpdateError' }, `You need to have a Premium plan to performe this action`)
+    }
+
+    const canRunManualUpdate = _canRunManualUpdate(user.lastManualUpdate)
+
+    if (!canRunManualUpdate && !isAdmin) {
+        throw VError({ name: 'ManualRunToSoonError' }, `Your last run was less than one hour ago, only can run manual update once every hour`)
     }
 
     // Tracks to be updated have to be not deleted, not sold and not archived
@@ -74,5 +91,21 @@ export default async function updateUserTracksInfo ({ userId }) {
 
     await TrackHistoryModel.insertMany(trackHistoryToInsert)
 
+    // Update the value of the last update date
+    user.lastManualUpdate = new Date()
+
+    user.save()
+
     console.log('UPDATED: ', updatedTracks)
 }
+
+function _canRunManualUpdate (lastRunDate = new Date()) {
+    const now = new Date()
+
+    const difTime = now.getTime() - lastRunDate.getTime()
+
+    const hoursSinceLastRun = difTime / (1000 * 60 * 60)
+
+    return hoursSinceLastRun >= 1
+}
+
