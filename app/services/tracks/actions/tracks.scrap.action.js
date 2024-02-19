@@ -24,11 +24,11 @@ export default async function scrap({ link }) {
             location: '.item-detail-location_ItemDetailLocation__link__s4oPx',
             description: '.item-detail_ItemDetail__description__7rXXT',
             sold: {
-                selector: '.item-detail-flags_ItemDetailFlags--midNegative__v5cBP',
+                selector: '[role="status"]',
                 how: 'html',
             },
             reserved: {
-                selector: '.item-detail-flags_ItemDetailFlags--midBlue__R1Wwl', // TODO
+                selector: '[role="status"]', // TODO
                 how: 'html'
             },
             previewImg: {
@@ -52,7 +52,8 @@ export default async function scrap({ link }) {
             deliveryInfo: data.deliveryInfo, // TODO
             location: data.location,
             description: data.description,
-            sold: Boolean(data.sold),
+            sold: Boolean(data.sold?.includes('Vendido')),
+            reserved: Boolean(data.reserved), // TODO
             previewImg,
         }
     
