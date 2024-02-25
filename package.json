@@ -7,7 +7,8 @@
   "scripts": {
     "test": "PORT=8900 NODE_ENV=test mocha \"app/**/*.spec.js\" \"app/**/*.integration.js\"",
     "test-single": "PORT=8900 NODE_ENV=test mocha",
-    "dev": "nodemon ./server.js localhost 8080"
+    "dev": "nodemon ./server.js localhost 8080",
+    "start": "node ./server.js"
   },
   "keywords": [
     "node.js",
