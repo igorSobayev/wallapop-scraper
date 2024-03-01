@@ -3,9 +3,9 @@ import cors from 'cors'
 import cookieSession from 'cookie-session'
 import dotenv from 'dotenv'
 
-import agenda from './app/components/agenda/index.js'
-
 import * as DB from './app/config/db.config.js'
+
+import agenda from './app/components/agenda/index.js'
 
 import routes from './app/routes/index.js'
 
@@ -13,9 +13,9 @@ dotenv.config()
 
 const app = express()
 
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+app.use(cors({credentials: true, origin: process.env.DOMAIN_URL || 'http://localhost:3000'}));
 app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", 'http://localhost:3000');
+    res.header("Access-Control-Allow-Origin", process.env.DOMAIN_URL || 'http://localhost:3000');
     res.header("Access-Control-Allow-Credentials", true);
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
     res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
@@ -49,8 +49,11 @@ await DB.init()
 // Start agenda
 await agenda.init()
 
-// set port, listen for requests
 const PORT = process.env.PORT || 8080
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`)
 })
+
+// Export allow run app in plesk
+export default app
