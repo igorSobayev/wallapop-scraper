@@ -112,7 +112,7 @@ async function run ({ user, code }) {
                     <!-- START MAIN CONTENT AREA -->
                         <tr>
                             <td class="wrapper" style="font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; box-sizing: border-box; padding: 24px;" valign="top">
-                            <img src="${process.env.DOMAIN_URL}/_nuxt/assets/logo.png" alt="Logo" width="500" height="60" border="0" style="border:0; outline:none; text-decoration:none; display:block; margin-bottom: 30px;" />
+                            <img src="${process.env.DOMAIN_URL}/images/logo.png" alt="Logo" width="500" border="0" style="border:0; outline:none; text-decoration:none; display:block; margin-bottom: 30px;" />
                             <p style="font-family: Helvetica, sans-serif; font-size: 16px; font-weight: normal; margin: 0; margin-bottom: 16px;">Antes de poder utilizar tu cuenta necesitamos que confirmes que el correo te pertenece.</p>
                             <p style="font-family: Helvetica, sans-serif; font-size: 16px; font-weight: normal; margin: 0; margin-bottom: 16px;">Este es tu código de verificación: <b>${code}</b></p>
                             <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; box-sizing: border-box; width: 100%; min-width: 100%;" width="100%">

@@ -2,7 +2,7 @@ import { transporter } from "./index.js";
 
 async function run ({ to, code }) {
     return transporter.sendMail({
-        from: '"Nautilus Kitchen" <isobayev@gmail.com>', // sender address
+        from: `"Wallatracker" <${process.env.MAILER_USER}>`, // sender address
         to: to, // list of receivers
         subject: "Reset password code", // Subject line
         text: `Tu código de recuperación es el siguiente: ${code}`, // plain text body
@@ -112,7 +112,7 @@ async function run ({ to, code }) {
                         <!-- START MAIN CONTENT AREA -->
                             <tr>
                                 <td class="wrapper" style="font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; box-sizing: border-box; padding: 24px;" valign="top">
-                                <img src="${process.env.DOMAIN_URL}/_nuxt/assets/logo.png" alt="Logo" width="500" height="60" border="0" style="border:0; outline:none; text-decoration:none; display:block; margin-bottom: 30px;" />
+                                <img src="${process.env.DOMAIN_URL}/images/logo.png" alt="Logo" width="500" border="0" style="border:0; outline:none; text-decoration:none; display:block; margin-bottom: 30px;" />
                                 <p style="font-family: Helvetica, sans-serif; font-size: 16px; font-weight: normal; margin: 0; margin-bottom: 16px;">Debes de copiar el código que tienes debajo y utilizarlo cuando vayas a cambiar la contraseña.</p>
                                 <p style="font-family: Helvetica, sans-serif; font-size: 16px; font-weight: normal; margin: 0; margin-bottom: 16px;">Este es tu código de recuperación: <b>${code}</b></p>
                                 </td>
