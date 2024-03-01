@@ -1,6 +1,8 @@
 import VError from 'verror'
 import scrapeIt from 'scrape-it'
 
+import Utils from '../../../utils'
+
 export default async function scrap({ link }) {
     if (!link) {
         throw VError('link to scrap is missing')
@@ -41,12 +43,14 @@ export default async function scrap({ link }) {
 
         const previewImg = _getPreviewImg(data.previewImg)
 
-        const rawViews = _getViewsFormated(data.views)
+        const rawViews = Utils.kNumbersFormatter(data.views)
+
+        const rawFavs = Utils.kNumbersFormatter(data.favs)
 
         const productData = {
             title: data.title,
             views: rawViews,
-            favs: data.favs,
+            favs: rawFavs,
             price: Number(rawPrice),
             delivery: Boolean(data.delivery),
             deliveryInfo: data.deliveryInfo, // TODO
@@ -70,18 +74,6 @@ export default async function scrap({ link }) {
         throw VError(e)
     }
 }
-
-function _getViewsFormated(numero) {
-    // Si el número es una cadena que termina con 'K', lo formateamos
-    const match = numero.match(/^(\d+(\.\d{1,2})?)K$/i)
-
-    if (match) {
-        return parseFloat(match[1]) * 1000
-    }
-
-    // Si no es una cadena válida o no termina con 'K', devolvemos el número original
-    return parseFloat(numero)
-  }
 
 function _getPreviewImg (img) {
     // Expresión regular para encontrar la URL entre paréntesis y hasta el signo de interrogación

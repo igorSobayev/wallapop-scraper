@@ -35,7 +35,20 @@ function randomString (length) {
   return crypto.randomBytes(length / 2).toString("hex")
 }
 
+function kNumbersFormatter (number) {
+  // Si el número es una cadena que termina con 'K', lo formateamos
+  const match = number.match(/^(\d+(\.\d{1,2})?)K$/i)
+
+  if (match) {
+    return parseFloat(match[1]) * 1000
+  }
+
+  // Si no es una cadena válida o no termina con 'K', devolvemos el número original
+  return parseFloat(number)
+}
+
 export default {
   validateRequest,
   randomString,
+  kNumbersFormatter,
 }
