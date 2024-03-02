@@ -2,9 +2,10 @@ import nodemailer from 'nodemailer'
 import testMail from './testMail.js'
 import resetPasswordCodeMail from './resetpasswordCodeMail.js'
 import registerCodeMail from './registerCodeMail.js'
+import paymentConfirmMail from './paymentConfirmMail.js'
 
 export const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+  host: "mail.wallatracker.com", // TODO use env var
   port: 465,
   secure: true,
   auth: {
@@ -25,6 +26,8 @@ async function sendEmail ({ templateName, info }) {
       return resetPasswordCodeMail.run({ to: info.to, code: info.code })
     case 'REGISTER_CODE':
       return registerCodeMail.run({ user: info.user, code: info.code })
+    case 'PAYMENT_CONFIRM':
+      return paymentConfirmMail.run({ user: info.user })
     default:
       break
   }
