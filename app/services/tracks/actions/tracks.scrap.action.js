@@ -1,7 +1,7 @@
 import VError from 'verror'
 import scrapeIt from 'scrape-it'
 
-import Utils from '../../../utils'
+import Utils from '../../../utils/index.js'
 
 export default async function scrap({ link }) {
     if (!link) {
