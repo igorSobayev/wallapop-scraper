@@ -5,7 +5,7 @@ import registerCodeMail from './registerCodeMail.js'
 import paymentConfirmMail from './paymentConfirmMail.js'
 
 export const transporter = nodemailer.createTransport({
-  host: "mail.wallatracker.com", // TODO use env var
+  host: process.env.MAILER_HOST,
   port: 465,
   secure: true,
   auth: {
