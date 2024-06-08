@@ -5,7 +5,7 @@ import dotenv from 'dotenv'
 
 import * as DB from './app/config/db.config.js'
 
-import agenda from './app/components/agenda/index.js'
+// import agenda from './app/components/agenda/index.js'
 
 import routes from './app/routes/index.js'
 
@@ -47,7 +47,7 @@ await routes(app)
 await DB.init()
 
 // Start agenda
-await agenda.init()
+// await agenda.init()
 
 const PORT = process.env.PORT || 8080
 
