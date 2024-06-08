@@ -26,9 +26,9 @@ export default async function updateUserTracksInfo ({ userId }) {
 
     const isAdmin = user.role === shared.ROLES.ADMIN
 
-    if (user.plan !== shared.PLANS.PREMIUM && !isAdmin) {
-        throw VError({ name: 'InvalidPlanOnUpdateError' }, `You need to have a Premium plan to performe this action`)
-    }
+    // if (user.plan !== shared.PLANS.PREMIUM && !isAdmin) {
+    //     throw VError({ name: 'InvalidPlanOnUpdateError' }, `You need to have a Premium plan to performe this action`)
+    // }
 
     const canRunManualUpdate = _canRunManualUpdate(user.lastManualUpdate)
 
@@ -99,13 +99,13 @@ export default async function updateUserTracksInfo ({ userId }) {
     console.log('UPDATED: ', updatedTracks)
 }
 
-function _canRunManualUpdate (lastRunDate = new Date()) {
-    const now = new Date()
+function _canRunManualUpdate(lastRunDate = new Date()) {
+    const now = new Date();
 
-    const difTime = now.getTime() - lastRunDate.getTime()
+    const difTime = now.getTime() - lastRunDate.getTime();
 
-    const hoursSinceLastRun = difTime / (1000 * 60 * 60)
+    const minutesSinceLastRun = difTime / (1000 * 60);
 
-    return hoursSinceLastRun >= 1
+    return minutesSinceLastRun >= 10;
 }
 
