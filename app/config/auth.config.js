@@ -1,4 +1,4 @@
-const secret = 'la-efimera-vida'
+const secret = process.env.SECRET
 
 export default {
     secret
