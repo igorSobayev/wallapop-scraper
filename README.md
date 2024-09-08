@@ -1,5 +1,7 @@
-# Node.js Express Login and Registration template
-Template to start your project with the login system working
+## Wallapop Scraper
+This is the API for the Wallapop Scraper dashboard.
+You can find more info in the front repository: https://github.com/igorSobayev/wallapop-scraper-front
+
 ## Project setup
 ```
 npm install
